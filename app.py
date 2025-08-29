@@ -8,7 +8,7 @@ import json
 # LangChain imports
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import Qdrant
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import Document
@@ -136,11 +136,14 @@ def create_vector_store(documents: List[Document], api_key: str):
             model_kwargs={'device': 'cpu'}
         )
         
-        # Create vector store
-        vector_store = Chroma.from_documents(
+        # Create vector store using Qdrant
+        # Using in-memory collection for simplicity
+        collection_name = "documents_collection"
+        vector_store = Qdrant.from_documents(
             documents=splits,
             embedding=embeddings,
-            persist_directory="./chroma_db"
+            collection_name=collection_name,
+            force_recreate=True  # Recreate collection each time for demo
         )
         
         return vector_store, len(splits)
@@ -336,7 +339,7 @@ def main():
             st.info(f"**Chat History:** {len(st.session_state.chat_history)} messages")
             
             if st.session_state.vector_store:
-                st.info("**Vector Store:** ChromaDB")
+                st.info("**Vector Store:** Qdrant")
                 st.info("**Embeddings:** HuggingFace (all-MiniLM-L6-v2)")
                 st.info("**LLM:** SARVAM-m")
         else:

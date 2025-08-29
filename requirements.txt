@@ -1,7 +1,7 @@
 streamlit
 langchain
 langchain-community
-chromadb
+qdrant-client
 sentence-transformers
 tiktoken
 PyPDF2

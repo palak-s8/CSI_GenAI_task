@@ -11,7 +11,7 @@ A powerful Retrieval-Augmented Generation (RAG) system built with LangChain that
 - **📚 Source Attribution**: View the exact sources used for each answer
 - **📱 Responsive Design**: Clean, professional UI that works on all devices
 - **⚡ Fast Processing**: Efficient document chunking and vector storage
-- **🔄 Persistent Storage**: ChromaDB vector database for document persistence
+- **🔄 Vector Storage**: Qdrant vector database for document storage
 
 ## 🚀 Quick Start
 
@@ -62,7 +62,7 @@ A powerful Retrieval-Augmented Generation (RAG) system built with LangChain that
 ## 🏗️ Architecture
 
 ```
-User Upload → PDF Processing → Text Chunking → Embeddings → Vector Store (ChromaDB)
+User Upload → PDF Processing → Text Chunking → Embeddings → Vector Store (Qdrant)
                                                                     ↓
 User Query → Semantic Search → Context Retrieval → LLM (SARVAM-m) → Response
 ```
@@ -72,7 +72,7 @@ User Query → Semantic Search → Context Retrieval → LLM (SARVAM-m) → Resp
 - **Document Loader**: PyPDF2 for PDF processing
 - **Text Splitter**: RecursiveCharacterTextSplitter for optimal chunking
 - **Embeddings**: HuggingFace sentence-transformers (all-MiniLM-L6-v2)
-- **Vector Store**: ChromaDB for efficient similarity search
+- **Vector Store**: Qdrant for efficient similarity search
 - **LLM**: SARVAM-m for response generation
 - **Memory**: ConversationBufferMemory for context persistence
 
@@ -105,7 +105,7 @@ You can modify the following parameters in `app.py`:
 ### Vector Search
 - Uses similarity search to find most relevant document chunks
 - Retrieves top 3 most similar chunks for context
-- ChromaDB provides fast and efficient similarity search
+- Qdrant provides fast and efficient similarity search
 
 ### Memory Management
 - Conversation history is stored in session state
@@ -142,7 +142,7 @@ You can modify the following parameters in `app.py`:
 ## 🔒 Security & Privacy
 
 - **API Keys**: Never commit your `.env` file to version control
-- **Data Storage**: Documents are processed locally and stored in ChromaDB
+- **Data Storage**: Documents are processed locally and stored in Qdrant
 - **SARVAM AI**: Only document content is sent to SARVAM AI for responses
 - **Session Data**: Chat history is stored in Streamlit session state (cleared on restart)
 
@@ -177,7 +177,7 @@ This project is open source and available under the MIT License.
 - Built with [LangChain](https://www.langchain.com/)
 - Powered by [SARVAM AI](https://sarvam.ai/)
 - UI framework: [Streamlit](https://streamlit.io/)
-- Vector database: [ChromaDB](https://www.trychroma.com/)
+- Vector database: [Qdrant](https://qdrant.tech/)
 - Embeddings: [HuggingFace](https://huggingface.co/)
 
 ---
