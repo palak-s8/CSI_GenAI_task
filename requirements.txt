@@ -1,6 +1,7 @@
 streamlit
 langchain
 langchain-community
+sqlite3
 chromadb
 sentence-transformers
 tiktoken
