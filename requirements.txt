@@ -4,6 +4,6 @@ langchain-community
 chromadb
 sentence-transformers
 tiktoken
-PyPDF2
+PyPDF
 python-dotenv
 sarvamai
