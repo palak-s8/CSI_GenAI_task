@@ -1,9 +1,14 @@
 streamlit
 langchain
 langchain-community
+<<<<<<< HEAD
 qdrant-client
+=======
+db-sqlite3
+chromadb==1.0.20
+>>>>>>> 68a772d908dbd173488357cd051cdec27dcfb7df
 sentence-transformers
 tiktoken
-PyPDF2
+PyPDF
 python-dotenv
 sarvamai
