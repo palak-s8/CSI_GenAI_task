@@ -1,8 +1,7 @@
 streamlit
 langchain
 langchain-community
-sqlite3
-chromadb
+chromadb==1.0.20
 sentence-transformers
 tiktoken
 PyPDF
