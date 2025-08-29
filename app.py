@@ -19,6 +19,8 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.schema.runnable import Runnable
 from langchain.schema.output_parser import StrOutputParser
 
+# Qdrant imports (handled by LangChain)
+
 # Page configuration
 st.set_page_config(
     page_title="RAG Chat System",
@@ -97,6 +99,14 @@ def load_environment_variables():
     if not api_key:
         st.error("⚠️ SARVAM API key not found. Please set SARVAM_API_KEY in your .env file or environment variables.")
         st.stop()
+    
+    # Check if Qdrant credentials are set
+    qdrant_url = os.getenv('QDRANT_URL')
+    qdrant_api_key = os.getenv('QDRANT_API_KEY')
+    if not qdrant_url or not qdrant_api_key:
+        st.error("⚠️ Qdrant credentials not found. Please set QDRANT_URL and QDRANT_API_KEY in your .env file.")
+        st.stop()
+    
     return api_key
 
 def process_pdf(uploaded_file) -> List[Document]:
@@ -136,13 +146,24 @@ def create_vector_store(documents: List[Document], api_key: str):
             model_kwargs={'device': 'cpu'}
         )
         
-        # Create vector store using Qdrant
-        # Using in-memory collection for simplicity
+        # Create vector store using Qdrant Cloud
         collection_name = "documents_collection"
+        
+        # Get Qdrant credentials from environment variables
+        qdrant_url = os.getenv('QDRANT_URL')
+        qdrant_api_key = os.getenv('QDRANT_API_KEY')
+        
+        if not qdrant_url or not qdrant_api_key:
+            st.error("⚠️ Qdrant credentials not found. Please set QDRANT_URL and QDRANT_API_KEY in your .env file.")
+            return None, 0
+        
+        # Create vector store using Qdrant Cloud
         vector_store = Qdrant.from_documents(
             documents=splits,
             embedding=embeddings,
             collection_name=collection_name,
+            url=qdrant_url,
+            api_key=qdrant_api_key,
             force_recreate=True  # Recreate collection each time for demo
         )
         
@@ -339,7 +360,7 @@ def main():
             st.info(f"**Chat History:** {len(st.session_state.chat_history)} messages")
             
             if st.session_state.vector_store:
-                st.info("**Vector Store:** Qdrant")
+                st.info("**Vector Store:** Qdrant Cloud")
                 st.info("**Embeddings:** HuggingFace (all-MiniLM-L6-v2)")
                 st.info("**LLM:** SARVAM-m")
         else:

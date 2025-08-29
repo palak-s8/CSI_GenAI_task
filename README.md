@@ -11,7 +11,7 @@ A powerful Retrieval-Augmented Generation (RAG) system built with LangChain that
 - **📚 Source Attribution**: View the exact sources used for each answer
 - **📱 Responsive Design**: Clean, professional UI that works on all devices
 - **⚡ Fast Processing**: Efficient document chunking and vector storage
-- **🔄 Vector Storage**: Qdrant vector database for document storage
+- **🔄 Vector Storage**: Qdrant Cloud vector database for persistent document storage
 
 ## 🚀 Quick Start
 
@@ -35,13 +35,23 @@ A powerful Retrieval-Augmented Generation (RAG) system built with LangChain that
      ```
      SARVAM_API_KEY=your_actual_api_key_here
      ```
+   - Add your Qdrant Cloud credentials:
+     ```
+     QDRANT_URL=https://your-cluster-id.your-region.aws.cloud.qdrant.io:6333
+     QDRANT_API_KEY=your_actual_qdrant_api_key_here
+     ```
 
-4. **Run the application**:
+4. **Configure Qdrant Cloud** (optional - for persistent storage):
+   - The application is pre-configured with Qdrant Cloud credentials
+   - Your documents will be stored persistently in the cloud
+   - No additional setup required
+
+5. **Run the application**:
    ```bash
    streamlit run app.py
    ```
 
-5. **Open your browser** and navigate to the displayed URL (usually `http://localhost:8501`)
+6. **Open your browser** and navigate to the displayed URL (usually `http://localhost:8501`)
 
 ## 📖 How to Use
 
@@ -72,7 +82,7 @@ User Query → Semantic Search → Context Retrieval → LLM (SARVAM-m) → Resp
 - **Document Loader**: PyPDF2 for PDF processing
 - **Text Splitter**: RecursiveCharacterTextSplitter for optimal chunking
 - **Embeddings**: HuggingFace sentence-transformers (all-MiniLM-L6-v2)
-- **Vector Store**: Qdrant for efficient similarity search
+- **Vector Store**: Qdrant Cloud for efficient similarity search
 - **LLM**: SARVAM-m for response generation
 - **Memory**: ConversationBufferMemory for context persistence
 
@@ -86,6 +96,15 @@ User Query → Semantic Search → Context Retrieval → LLM (SARVAM-m) → Resp
 | `SARVAM_MODEL_NAME` | SARVAM model to use | `sarvam-m` |
 | `SARVAM_TEMPERATURE` | Response creativity (0-1) | `0.7` |
 | `SARVAM_MAX_TOKENS` | Maximum response length | `1000` |
+
+### Qdrant Cloud Configuration
+
+The application requires Qdrant Cloud credentials to be set in your `.env` file:
+- **QDRANT_URL**: Your Qdrant Cloud cluster URL
+- **QDRANT_API_KEY**: Your Qdrant Cloud API key
+- **Collection**: `documents_collection` (auto-created)
+
+**Note**: Your documents and embeddings are stored persistently in Qdrant Cloud, so they'll be available even after restarting the application.
 
 ### Customization
 
@@ -105,7 +124,7 @@ You can modify the following parameters in `app.py`:
 ### Vector Search
 - Uses similarity search to find most relevant document chunks
 - Retrieves top 3 most similar chunks for context
-- Qdrant provides fast and efficient similarity search
+- Qdrant Cloud provides fast and efficient similarity search with persistent storage
 
 ### Memory Management
 - Conversation history is stored in session state
@@ -142,7 +161,7 @@ You can modify the following parameters in `app.py`:
 ## 🔒 Security & Privacy
 
 - **API Keys**: Never commit your `.env` file to version control
-- **Data Storage**: Documents are processed locally and stored in Qdrant
+- **Data Storage**: Documents are processed locally and stored in Qdrant Cloud
 - **SARVAM AI**: Only document content is sent to SARVAM AI for responses
 - **Session Data**: Chat history is stored in Streamlit session state (cleared on restart)
 
