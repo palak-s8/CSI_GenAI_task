@@ -1,5 +1,7 @@
 # 📚 RAG Chat System with LangChain
 
+**🌐 Live Demo: [https://palak-s8-csi-genai-task-app-quh8zz.streamlit.app/](https://palak-s8-csi-genai-task-app-quh8zz.streamlit.app/)**
+
 A powerful Retrieval-Augmented Generation (RAG) system built with LangChain that allows users to upload PDF documents and chat with them using AI-powered contextual responses.
 
 ## ✨ Features
